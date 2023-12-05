@@ -3,11 +3,10 @@ import "@splidejs/react-splide/css";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Card from "react-bootstrap/Card";
-// import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
-import { json } from "react-router-dom";
 function Popular() {
+  // console.log("import.meta.env.VITE_API_KEY2", import.meta.env.VITE_API_KEY2);
   const [popular, setPopular] = useState([]);
 
   useEffect(() => {
@@ -15,19 +14,18 @@ function Popular() {
   }, []);
 
   const getPopular = async () => {
-    const check = localStorage.getItem("popular");
-    if (check) {
-      setPopular(JSON.parse(check));
-    } else {
-      const api = await fetch(
-        `https://api.spoonacular.com/recipes/random?apiKey=9519ae763bb54f5a9ba343e6c02f8880&number=10`
-      );
-      const data = await api.json();
-      localStorage.setItem("popular", JSON.stringify(data.recipes));
-      setPopular(data.recipes);
-      console.log("data :>> ", data);
-    }
+    const api = await fetch(
+      `https://api.spoonacular.com/recipes/random?number=10&apiKey=${
+        import.meta.env.VITE_API_KEY3
+      }`
+    );
+
+    const data = await api.json();
+
+    setPopular(data.recipes);
+    console.log("data :>> ", data);
   };
+
   return (
     <div>
       <Wrapper>
@@ -35,8 +33,8 @@ function Popular() {
         <Splide
           options={{
             perPage: 3,
-            arrows: false,
             pagination: false,
+            arrows: true,
             drag: "free",
             gap: "2rem",
           }}
@@ -50,19 +48,19 @@ function Popular() {
                       width: "15rem",
                       overflow: "hidden",
                       position: "relative",
+                      border: "solid #eb484e",
                     }}
                   >
-                    <Link to={"/recipe/" +  recipe.id} >
-                    <Card.Img src={recipe.image} />
-                    <Card.Body>
-                      <Card.Title>{recipe.title}</Card.Title>
+                    <Link to={"/recipe/" + recipe.id}>
+                      <Card.Img src={recipe.image} />
+                      <Card.Body>
+                        <Card.Title>{recipe.title}</Card.Title>
                       </Card.Body>
-                      </Link>
+                    </Link>
                   </Card>
                 </SplideSlide>
               );
             })}
-          ;
         </Splide>
       </Wrapper>
     </div>

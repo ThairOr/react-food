@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
-import styled from "styled-components";
-import {FaSearch} from "react-icons/fa"
+import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import "../style/Search.css";
 
 function Search() {
   const [input, setInput] = useState("");
@@ -10,11 +10,11 @@ function Search() {
   const submitHandler = (e) => {
     e.preventDefault();
     navigate("/searched/" + input);
-  }
+  };
 
   return (
-    <div>
-      <form role="form" onSubmit={submitHandler}> 
+    <div style={{ borderRadius: "1%", marginTop: "3%" }}>
+      <form role="form" onSubmit={submitHandler}>
         <div className="form-group">
           <FaSearch></FaSearch>
           <input

@@ -1,0 +1,35 @@
+.wrapper{
+margin-top: 10rem;
+    margin-bottom: 5rem;
+    display: flex;
+
+    .active {
+        background: linear-gradient(to right, #f27121, #e94057);
+        color: white;
+    }
+
+    h2 {
+        margin-bottom: 1rem;
+    }
+
+    li {
+        font-size: 1rem;
+        line-height: 2rem;
+    }
+
+    ul {
+        margin-top:  2rem;
+    }
+
+    img {
+        margin-right: 2rem;
+        border: solid #eb484e;
+        border-radius: 15%;
+        width: 25rem
+    }
+
+}
+.info{
+    margin-left: 1rem;
+    font-size: 1.2rem;
+}

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import styled from "styled-components";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { motion } from "framer-motion";
+import Filter from "./Filter";
+
 
 function Cuisine() {
   const [cuisine, setCuisine] = useState([]);
@@ -11,7 +13,7 @@ function Cuisine() {
 
   const getCuisine = async (name) => {
     const data = await fetch(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=9519ae763bb54f5a9ba343e6c02f8880&cuisine=${name}`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${import.meta.env.VITE_API_KEY3}&number=20&cuisine=${name}`
     );
     const items = await data.json();
 
@@ -24,28 +26,48 @@ function Cuisine() {
   }, [params.type]);
 
   return (
-    <div>
+    <>
+      {/* <Category /> */}
+      <Filter/>
+  <motion.div
+      animate={{ opacity: 1 }}
+      inlist={{ opacity: 0 }}
+      exit={{ opacity: 0 }}
+      translate={{ duration: 0.5 }}
+    >
       <Row className="justify-content-md-center">
         {cuisine &&
           cuisine.map((items) => {
             return (
-              
-              <Col xs={4}>
-                <Card style={{ width: "15rem", margin: "1rem", border: "solid #B9CFE6" }} key={items.id}>
-                <Col>
-                  <Card.Img variant="top" src={items.image} />
-                </Col>
-                <Card.Body>
-                  <Card.Title>{items.title}</Card.Title>
-                  </Card.Body>
-                  
+              <Col xs={4} key={items.id}>
+                <Card
+                  style={{
+                    width: "15rem",
+                    margin: "1rem",
+                    border: "solid #eb484e",
+                  }}
+                >
+                  <Col>
+                    <Link to={"/recipe/" + items.id}>
+                      <Card.Img variant="top" src={items.image} />
+                    </Link>
+                  </Col>
+                  <Link to={"/recipe/" + items.id}>
+                    <Card.Body>
+                      <Card.Title>{items.title}</Card.Title>
+                    </Card.Body>
+                  </Link>
                 </Card>
-                </Col>
-                
+              </Col>
             );
           })}
       </Row>
-    </div>
+      </motion.div>
+      
+      
+      
+  </>
+    
   );
 }
 
